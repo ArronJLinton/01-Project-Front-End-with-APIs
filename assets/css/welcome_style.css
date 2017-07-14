@@ -4,7 +4,7 @@
   }
     
     #welcomeHeader {
-      position: fixed;
+      position: absolute;
       top: 40%;
       color: white;
    /*   margin: 100px auto 0px auto;*/
@@ -20,7 +20,7 @@
     #welcomeButton {
       margin: auto 0px auto;
       z-index: 100;
-      position: fixed;
+      position: absolute;
       top: 80%;
       left: 85%;
       width: 150px;
