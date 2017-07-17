@@ -62,7 +62,7 @@ $("#submit-playlist").on("click", function(event) {
 var index;
 var songList = [];
 
-$(document).ready( function() {
+$(document).ready(function() {
 
 	function renderSongs(event) {
 
@@ -86,7 +86,7 @@ $(document).ready( function() {
 	// Function to Display Spotify API Results
 	function displayResults(event) {
 
-		event.preventDefault();
+		// event.preventDefault();
 		var q = $("#query").val().trim();
 		var queryUrl = "https://api.spotify.com/v1/search?type=track,artist&market=US&limit=10";
 		console.log(q)
@@ -217,11 +217,13 @@ $(document).ready( function() {
     };
  
 // Exceutes the Function to Display Results from Spotify API
-$(document).on("click", "#search", displayResults());
+$(document).on("click", "#search", displayResults);
 
 $("#clr").on("click", function(event) {
         event.preventDefault();
        $("#search-form")[0].reset();
        $("#searchResults").empty();
   });
+
+});
 

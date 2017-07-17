@@ -39,11 +39,12 @@ h1 {
 }
 
 .footer {
+	clear: both;
 	position: absolute;
 	right: 0;
-    bottom: 0;
+    bottom: 100;
     left: 0;
     padding: 1rem;
-    background-color: #efefef;
+    background-color: transparent;
     text-align: center;
 }

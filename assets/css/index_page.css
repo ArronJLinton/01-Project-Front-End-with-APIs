@@ -162,10 +162,10 @@
 .footer {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 100;
   left: 0;
   padding: 1rem;
-  color: black;
+  color: white;
   background-color: transparent;
   text-align: center;
 }

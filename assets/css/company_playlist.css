@@ -37,6 +37,7 @@ button:hover{
     bottom: 0;
     left: 0;
     padding: 1rem;
-    background-color: #efefef;
+    color: white;
+    background-color: transparent;
     text-align: center;
 }
