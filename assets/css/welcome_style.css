@@ -46,7 +46,7 @@
     }
 
   /*Background slideshow*/
-    #backgroundPics {
+/*    #backgroundPics {
       z-index: 0;
       max-width: 100%;
       max-height:initial;
@@ -54,12 +54,13 @@
       width: 100%;
       background-size: 100% 100%;
 
-    }
+    }*/
 
     .backgroundPics {
+      z-index: 0;
       position: fixed;
       max-width: 100%;
-      max-height:initial;
+      max-height:contain;
       height:auto;
       width: 100%;
       background-size: 100% 100%;
@@ -123,13 +124,13 @@
        0%{
           opacity: 1;
        }
-       10.5% {
+       20.5% {
           opacity:1;
        }
-       12.5%{
+       30.5%{
           opacity: 0;
        }
-       98% {
+       75% {
           opacity:0;
        }
        100% {
