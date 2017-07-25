@@ -40,9 +40,9 @@ h1 {
 
 .footer {
 	clear: both;
-	position: absolute;
+	position: fixed;
 	right: 0;
-    bottom: 100;
+    bottom: 0;
     left: 0;
     padding: 1rem;
     background-color: transparent;

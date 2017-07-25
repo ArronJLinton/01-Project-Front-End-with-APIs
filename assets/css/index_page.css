@@ -9,7 +9,7 @@
 	text-align: center;
 	padding: 20px;
 	background-color: white;
-	opacity: 0.7;
+	opacity: 0.6;
 	color: black;
   font-family: 'Gloria Hallelujah', cursive;	
   border: 2px solid grey;
@@ -181,7 +181,7 @@
 
 
 .footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
