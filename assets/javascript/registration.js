@@ -1,4 +1,3 @@
-
 var user_name = "";
 var user_email = "";
 var user_position = "";
@@ -13,21 +12,22 @@ var song_url = "";
 var song_picture = "";
 
 // Initialize Firebase
-    var config = {
-         apiKey: "AIzaSyARm7xKPSKNRunk49DwplrL7Sb3mA0wTa4",
-         authDomain: "project-01-front-end-wit-39454.firebaseapp.com",
-         databaseURL: "https://project-01-front-end-wit-39454.firebaseio.com",
-         storageBucket: "project-01-front-end-wit-39454.appspot.com",
-         messagingSenderId: "780675474319"
-    };
-    firebase.initializeApp(config);
-    //Variables
-    //Get a reference to the database service
-    var database = firebase.database();   
+var config = {
+     apiKey: "AIzaSyARm7xKPSKNRunk49DwplrL7Sb3mA0wTa4",
+     authDomain: "project-01-front-end-wit-39454.firebaseapp.com",
+     databaseURL: "https://project-01-front-end-wit-39454.firebaseio.com",
+     storageBucket: "project-01-front-end-wit-39454.appspot.com",
+     messagingSenderId: "780675474319"
+};
+
+firebase.initializeApp(config);
+
+//Variables
+//Get a reference to the database service
+var database = firebase.database();   
 
 // Capture Button Click
 $("#submit-playlist").on("click", function(event) {
-	debugger;
 	event.preventDefault();
 	
 	name = $("#profile-name").val().trim();
@@ -63,6 +63,9 @@ $("#submit-playlist").on("click", function(event) {
 var index;
 var songList = [];
 
+var Spotify = require("node-spotify-api");
+
+
 $(document).ready(function() {
 
 	function renderSongs(event) {
@@ -83,40 +86,12 @@ $(document).ready(function() {
 		}
 
 	}
-
 	// Function to Display Spotify API Results
 	function displayResults(event) {
 
-
-		var fetchTracks = function (albumId, callback) {
-		    $.ajax({
-		        url: 'https://api.spotify.com/v1/albums/' + albumId,
-		        success: function (response) {
-		            callback(response);
-		        }
-		    });
-		};
-
-		var searchAlbums = function (query) {
-		    $.ajax({
-		        url: 'https://api.spotify.com/v1/search',
-		        data: {
-		            q: query,
-		            type: 'album'
-		        },
-		        success: function (response) {
-		            resultsPlaceholder.innerHTML = template(response);
-		        }
-		    });
-		};
-
-
-
-
 		// event.preventDefault();
-		var query = $("#query").val().trim();
 		// var queryUrl = "https://api.spotify.com/v1/search?type=track,artist&market=US&limit=10";
-		var queryUrl = "https://api.spotify.com/v1/search";
+		// var queryUrl = "https://api.spotify.com/v1/search";
 
 		console.log(q)
 
@@ -124,62 +99,72 @@ $(document).ready(function() {
 		// 	'q': q,
 		// })
 
+		var spotify = new Spotify({
+		  id: "c2464acc109146f4a44347e9305496d8",
+		  secret: "eb7aefd895334ac0b329cdbbbf12926e"
+		});
 
+		var query = $("#query").val().trim();
+		 
+		spotify.search({ type: 'track', query: query }, function(err, data) {
+		  if (err) {
+		    return console.log('Error occurred: ' + err);
+		  }
+		 
+		console.log(data); 
+		});
 
 		
-		$.ajax({
+		// $.ajax({
 
-        	url: queryUrl,
-      //   	headers: {
-      //  			'Authorization': 'Bearer ' + accessToken
-   			// },
-					data: {
-            q: query,
-            type: 'track'
-	        },
-        	method: 'GET'
+  //       	url: queryUrl,
+		// 			data: {
+  //           q: query,
+  //           type: 'track'
+	 //        },
+  //       	method: 'GET'
 
-        })
-        .done(function(response) {
+  //       })
+  //       .done(function(response) {
 
-        	console.log(response);
-        	var data = response.tracks
+  //       	console.log(response);
+  //       	var data = response.tracks
 
 
-        	for(var i = 0; i < data.items.length; i++) {
-        	var tracks = $("<tr id='track'>");
+  //       	for(var i = 0; i < data.items.length; i++) {
+  //       	var tracks = $("<tr id='track'>");
 
-        		var songName = "<br>" + data.items[i].name + "<br>";	
-        		var artist = data.items[i].artists[0].name;
-        		var albumArt = data.items[i].album.images[0].url;
+  //       		var songName = "<br>" + data.items[i].name + "<br>";	
+  //       		var artist = data.items[i].artists[0].name;
+  //       		var albumArt = data.items[i].album.images[0].url;
 
-        		var image = $("<img class='img-rounded' width='165px' height='150px'>").attr("src", albumArt);
-        		var p = $("<p class='songInfo'>")
-        		p = songName + "By:" + artist;
+  //       		var image = $("<img class='img-rounded' width='165px' height='150px'>").attr("src", albumArt);
+  //       		var p = $("<p class='songInfo'>")
+  //       		p = songName + "By:" + artist;
 
-        		var uri = data.items[i].uri;
+  //       		var uri = data.items[i].uri;
 
-        		var trackUri = "https://embed.spotify.com/?uri=" + uri; 
+  //       		var trackUri = "https://embed.spotify.com/?uri=" + uri; 
 
-        		var preview = data.items[i].preview_url;
-        		var column = $("<td class='col-md-4'id='resultCol'>");
-        		var playButton = $("<video width='300px' height='85px' class='preview' controls>").attr("src", preview);
+  //       		var preview = data.items[i].preview_url;
+  //       		var column = $("<td class='col-md-4'id='resultCol'>");
+  //       		var playButton = $("<video width='300px' height='85px' class='preview' controls>").attr("src", preview);
         		
-        		var playlistAdd = $("<button type='button' class='add btn-primary'>").text("Add To Playlist");
-        		column.prepend(playButton);
-        		tracks.append("<td class='col-md-2'>" + p + "</td>");
-        		tracks.append(image);
+  //       		var playlistAdd = $("<button type='button' class='add btn-primary'>").text("Add To Playlist");
+  //       		column.prepend(playButton);
+  //       		tracks.append("<td class='col-md-2'>" + p + "</td>");
+  //       		tracks.append(image);
         		
-        		tracks.append(column);
-        		tracks.append(playlistAdd);
+  //       		tracks.append(column);
+  //       		tracks.append(playlistAdd);
 
-        		// $(".song").on("load", function preventAutoPlay(event) {
-        		// 	event.preventDefault();
-        		// 	audio.pause()
-        		// })
+  //       		// $(".song").on("load", function preventAutoPlay(event) {
+  //       		// 	event.preventDefault();
+  //       		// 	audio.pause()
+  //       		// })
 
-        		$(".table #searchResults").append(tracks);
-        	}
+  //       		$(".table #searchResults").append(tracks);
+  //       	}
 
 
         // function playPreview(snd) {
@@ -252,7 +237,7 @@ $(document).ready(function() {
 		// 	});
 
 		// })
-       })
+       // })
     };
  
 // Exceutes the Function to Display Results from Spotify API
