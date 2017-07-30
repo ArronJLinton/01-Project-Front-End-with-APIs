@@ -27,8 +27,9 @@ var song_picture = "";
 
 // Capture Button Click
 $("#submit-playlist").on("click", function(event) {
-	
+	debugger;
 	event.preventDefault();
+	
 	name = $("#profile-name").val().trim();
 	email = $("#profile-email").val().trim();
 	position = $("#profile-position").val().trim();
@@ -86,18 +87,56 @@ $(document).ready(function() {
 	// Function to Display Spotify API Results
 	function displayResults(event) {
 
+
+		var fetchTracks = function (albumId, callback) {
+		    $.ajax({
+		        url: 'https://api.spotify.com/v1/albums/' + albumId,
+		        success: function (response) {
+		            callback(response);
+		        }
+		    });
+		};
+
+		var searchAlbums = function (query) {
+		    $.ajax({
+		        url: 'https://api.spotify.com/v1/search',
+		        data: {
+		            q: query,
+		            type: 'album'
+		        },
+		        success: function (response) {
+		            resultsPlaceholder.innerHTML = template(response);
+		        }
+		    });
+		};
+
+
+
+
 		// event.preventDefault();
-		var q = $("#query").val().trim();
-		var queryUrl = "https://api.spotify.com/v1/search?type=track,artist&market=US&limit=10";
+		var query = $("#query").val().trim();
+		// var queryUrl = "https://api.spotify.com/v1/search?type=track,artist&market=US&limit=10";
+		var queryUrl = "https://api.spotify.com/v1/search";
+
 		console.log(q)
 
-		queryUrl += '&' + $.param({
-			'q': q,
-		})
+		// queryUrl += '&' + $.param({
+		// 	'q': q,
+		// })
 
+
+
+		
 		$.ajax({
 
         	url: queryUrl,
+      //   	headers: {
+      //  			'Authorization': 'Bearer ' + accessToken
+   			// },
+					data: {
+            q: query,
+            type: 'track'
+	        },
         	method: 'GET'
 
         })
