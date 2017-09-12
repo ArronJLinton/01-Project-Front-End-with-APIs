@@ -11,20 +11,29 @@ var song_name = "";
 var song_url = "";
 var song_picture = "";
 
+var firebase = require('firebase');
 // Initialize Firebase
-var config = {
-     apiKey: "AIzaSyARm7xKPSKNRunk49DwplrL7Sb3mA0wTa4",
-     authDomain: "project-01-front-end-wit-39454.firebaseapp.com",
-     databaseURL: "https://project-01-front-end-wit-39454.firebaseio.com",
-     storageBucket: "project-01-front-end-wit-39454.appspot.com",
-     messagingSenderId: "780675474319"
-};
+var app = firebase.initializeApp({
+	   apiKey: 'AIzaSyARm7xKPSKNRunk49DwplrL7Sb3mA0wTa4',
+     authDomain: 'project-01-front-end-wit-39454.firebaseapp.com',
+     databaseURL: 'https://project-01-front-end-wit-39454.firebaseio.com',
+     storageBucket: 'project-01-front-end-wit-39454.appspot.com',
+     messagingSenderId: '780675474319'
+});
 
-firebase.initializeApp(config);
+// var config = {
+//      apiKey: "AIzaSyARm7xKPSKNRunk49DwplrL7Sb3mA0wTa4",
+//      authDomain: "project-01-front-end-wit-39454.firebaseapp.com",
+//      databaseURL: "https://project-01-front-end-wit-39454.firebaseio.com",
+//      storageBucket: "project-01-front-end-wit-39454.appspot.com",
+//      messagingSenderId: "780675474319"
+// };
+
+// firebase.initializeApp(config);
 
 //Variables
 //Get a reference to the database service
-var database = firebase.database();   
+var database = app.database();   
 
 // Capture Button Click
 $("#submit-playlist").on("click", function(event) {
@@ -85,16 +94,15 @@ $(document).ready(function() {
 
 		}
 
-	}
-	// Function to Display Spotify API Results
+	} // End of renderSongs() function
+
+	// Function to Display Spotify API Search Results
 	function displayResults(event) {
 
-		// event.preventDefault();
+		event.preventDefault();
+		console.log("working")
 		// var queryUrl = "https://api.spotify.com/v1/search?type=track,artist&market=US&limit=10";
 		// var queryUrl = "https://api.spotify.com/v1/search";
-
-		console.log(q)
-
 		// queryUrl += '&' + $.param({
 		// 	'q': q,
 		// })
@@ -105,7 +113,7 @@ $(document).ready(function() {
 		});
 
 		var query = $("#query").val().trim();
-		 
+		 console.log(query)
 		spotify.search({ type: 'track', query: query }, function(err, data) {
 		  if (err) {
 		    return console.log('Error occurred: ' + err);
@@ -192,38 +200,38 @@ $(document).ready(function() {
 
 
 	   // Playlist Add Button
-		$(".add").on("click", function () {
+		// $(".add").on("click", function () {
 
-				index = ($(this).index('.add'));
-				console.log(index)
-				id = data.items[index].id;
-				url = data.items[index].preview_url;
-				name = data.items[index].name;
-				artist = data.items[index].artists[0].name
+		// 		index = ($(this).index('.add'));
+		// 		console.log(index)
+		// 		id = data.items[index].id;
+		// 		url = data.items[index].preview_url;
+		// 		name = data.items[index].name;
+		// 		artist = data.items[index].artists[0].name
 				
-				picture = data.items[index].album.images[0].url;
+		// 		picture = data.items[index].album.images[0].url;
 				     	
-				// Code for the push
-				database.ref('songs/').push({
-					song_id: id,
-					song_name: name,
-					song_artist: artist,
-					song_url: url,
-					song_picture: picture
-				})
+		// 		// Code for the push
+		// 		database.ref('songs/').push({
+		// 			song_id: id,
+		// 			song_name: name,
+		// 			song_artist: artist,
+		// 			song_url: url,
+		// 			song_picture: picture
+		// 		})
 
-				// database.ref('users/').push({
-				// 	user_fav_songs: id,
-				// })
+		// 		// database.ref('users/').push({
+		// 		// 	user_fav_songs: id,
+		// 		// })
 
-				var trackName = data.items[index].name;
-				// var trackArtist = data.items[index].artists[0].name;
-				// trackName += "By:" + trackArtist;
-				console.log(trackName);
-				songList.push(trackName);
-	     		renderSongs();
+		// 		var trackName = data.items[index].name;
+		// 		// var trackArtist = data.items[index].artists[0].name;
+		// 		// trackName += "By:" + trackArtist;
+		// 		console.log(trackName);
+		// 		songList.push(trackName);
+	 //     		renderSongs();
 				
-			});
+		// 	});
 
 		// $("#submit-playlist").on("click", function() {
 			
@@ -238,16 +246,17 @@ $(document).ready(function() {
 
 		// })
        // })
-    };
- 
-// Exceutes the Function to Display Results from Spotify API
-$(document).on("click", "#search", displayResults);
 
-$("#clr").on("click", function(event) {
-        event.preventDefault();
-       $("#search-form")[0].reset();
-       $("#searchResults").empty();
-  });
+    }; // ========== End of Display Spotify API Search Results ========== //
+ 
+	// Exceutes the Function to Display Results from Spotify API
+	$(document).on("click", "#search", displayResults);
+
+	$("#clr").on("click", function(event) {
+	        event.preventDefault();
+	       $("#search-form")[0].reset();
+	       $("#searchResults").empty();
+	  });
 
 });
 
