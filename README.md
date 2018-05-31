@@ -1,9 +1,8 @@
-# 01-Project-Front-End-with-APIs
+# Maestro
 
 
 ## Description
-Here we have created an application that allows employees of a company to become better acquainted. Company culture is very imporant because it allows employeers to feel more comfortable with their work place and lead to increased productivity.
-
+Web application that increases company productivity and improves company culture by connecting and engaging employees on a music platform.
 
 ## Contributors
 [Ishani Amin](https://github.com/IshaniAmin) || [Arron Linton](https://github.com/ArronJLinton) || [Rhyna Silva](https://github.com/rhynas)
