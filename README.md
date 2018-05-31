@@ -1,5 +1,6 @@
 # Maestro
 
+*_Application is currently down due to authoirzation changes in Spotify API_*
 
 ## Description
 Web application that increases company productivity and improves company culture by connecting and engaging employees on a music platform.
